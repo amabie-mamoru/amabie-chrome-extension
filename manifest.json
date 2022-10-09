@@ -7,6 +7,10 @@
     {
       "js": ["github_project_assignee_list.js"],
       "matches": ["https://github.com/*"]
+    },
+    {
+      "js": ["observe_youtube_watch.js"],
+      "matches": ["https://www.youtube.com/*"]
     }
   ]
 }
