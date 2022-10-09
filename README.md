@@ -1,5 +1,22 @@
 # 天日江護が使ってる自作 Chrome Extension
 
+## Youtube 見過ぎを自分で抑止したい人用の機能
+
+![](./doc/images/observe-youtube-watch.gif)
+
+### 課題
+
+なんやかんやで言い訳して Youtube をだらだら見ている自分を叱りたかったので作った
+
+### 機能効果
+
+* `observe_youtube_watch.js` の上の方に書いてある設定値によって一定時間以上 Chrome で Youtube を見てたら抑止のダイアログが出る
+* スヌーズしたら設定値だけ延長する（必要な動画見てるときもあるだろうから）
+* 閉じる覚悟を決めたらもう一度ダイアログでアラートはするが強制終了することはしない（あくまで自制したい人向け）
+* 他のタブで見たとしても時間を共有するので抜け道を防止できる
+* 設定時間にきたらリセットするのでリセット時間に合わせて 1日n時間まで！みたいな制限ができる
+
+
 ## Github Project で Assignee をアイコン 1 Click で絞り込める機能
 
 ![](./doc/images/github-project-assignee-list.gif)
