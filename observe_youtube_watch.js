@@ -97,6 +97,7 @@
         clearInterval(this.intervalId);
         return;
       }
+      alert(`${this.snooze / 60}分延長したよ！`);
       this.limit = this.limit + this.snooze;
     }
   }
