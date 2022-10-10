@@ -37,7 +37,7 @@
     _writeCookie(time)
     {
       document.cookie = `youtubeObserverTime=${time}`
-      document.cookie = `youtubeObserverDate=${Date.now}`
+      document.cookie = `youtubeObserverDate=${(new Date()).getTime()}`
     }
     updateSpentTimeIfNeeded() {
       if (this._readCookie > this._spentTime) {
