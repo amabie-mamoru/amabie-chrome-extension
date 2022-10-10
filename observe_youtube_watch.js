@@ -70,11 +70,17 @@
       }
     }
     _readRecordDate() {
-      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')) === undefined) { return; }
+      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')) === undefined) {
+        this._writeCookie(0);
+        return;
+      }
       return document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')).split('=')[1];
     }
     _readSpentTime() {
-      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')) === undefined) { return; }
+      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')) === undefined) {
+        this._writeCookie(0);
+        return;
+      }
       return document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1];
     }
     _updateTime() {
