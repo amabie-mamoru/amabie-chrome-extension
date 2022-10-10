@@ -5,6 +5,7 @@
       this.snooze = 1800; // 30分 = 1800
       this.resetHour = 5; // 5時 (0-23時表記)
       // 直接操作せず _readIfNeeded() 経由で呼び出す
+      // spent って言ってるけど、滞在しているという意味合いに変わった
       this._spentTime = 0;
       this.isLeft = false;
       this.intervalId = null;
@@ -30,9 +31,8 @@
       }, 1000);
     }
     writeIfNeeded() {
-      if (this._spentTime > this._readSpentTime()) {
-        this._writeCookie(this._spentTime);
-      }
+      this._writeCookie(this._spentTime + this._readSpentTime());
+      this._spentTime = 0;
     }
     _writeCookie(time)
     {
@@ -46,7 +46,7 @@
     }
     resetIfNeeded() {
       const now = new Date();
-      const previous = new Date(this._readRecordDate() * 1000);
+      const previous = this._readRecordDate();
       // 月はまたいでない
       if (now.getMonth() == previous.getMonth()) {
         // 日またぎ
@@ -72,23 +72,23 @@
     _readRecordDate() {
       if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')) === undefined) {
         this._writeCookie(0);
-        return;
+        return new Date();
       }
-      return document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')).split('=')[1];
+      return new Date(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')).split('=')[1]);
     }
     _readSpentTime() {
       if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')) === undefined) {
         this._writeCookie(0);
-        return;
+        return 0;
       }
-      return document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1];
+      return parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1], 10);
     }
     _updateTime() {
       if (this.isLeft) { return; }
       this._spentTime += 1;
     }
     _mustNotify() {
-      return this.limit < this._spentTime;
+      return this.limit < this._readSpentTime();
     }
     _notify() {
       let inputResult = confirm("時間になりました！\n即座にリセットしてやめるならOK\nスヌーズするならキャンセル");
