@@ -74,7 +74,7 @@
         this._writeCookie(0);
         return new Date();
       }
-      return new Date(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')).split('=')[1]);
+      return new Date(parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverDate')).split('=')[1]));
     }
     _readSpentTime() {
       if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')) === undefined) {
