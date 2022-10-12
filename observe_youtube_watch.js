@@ -14,7 +14,6 @@
     measure() {
       this.isLeft = false;
       this.resetIfNeeded();
-      this.updateSpentTimeIfNeeded();
     }
     unmeasure() {
       this.isLeft = true;
@@ -39,11 +38,6 @@
       document.cookie = `youtubeObserverTime=${time}`
       document.cookie = `youtubeObserverDate=${(new Date()).getTime()}`
     }
-    updateSpentTimeIfNeeded() {
-      if (this._readCookie > this._spentTime) {
-        this._spentTime = this._readCookie();
-      }
-    }
     resetIfNeeded() {
       const now = new Date();
       const previous = this._readRecordDate();
@@ -53,6 +47,7 @@
         if (now.getDate() > previous.getDate()) {
           if (now.getHours() >= this.resetHour) {
             this._writeCookie(0);
+            this._spentTime = 0;
           }
         }
       }
@@ -60,12 +55,14 @@
       else if (now.getMonth() > previous.getMonth()) {
         if (now.getHours() >= this.resetHour) {
           this._writeCookie(0);
+          this._spentTime = 0;
         }
       }
       // 年越し
       else if (now.getMonth() < previous.getMonth()) {
         if (now.getHours() >= this.resetHour) {
           this._writeCookie(0);
+          this._spentTime = 0;
         }
       }
     }
