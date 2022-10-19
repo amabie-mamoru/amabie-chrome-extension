@@ -4,11 +4,11 @@
       this.limit = 7200; // 2時間 = 7200
       this.snooze = 1800; // 30分 = 1800
       this.resetHour = 5; // 5時 (0-23時表記)
-      // 直接操作せず _readIfNeeded() 経由で呼び出す
       // spent って言ってるけど、滞在しているという意味合いに変わった
       this._spentTime = 0;
       this.isLeft = false;
       this.intervalId = null;
+      this.TIME_ZONE_DIFF = 32400000; // 時差9時間
     }
 
     measure() {
@@ -39,8 +39,10 @@
       document.cookie = `youtubeObserverDate=${(new Date()).getTime()}`
     }
     resetIfNeeded() {
-      const now = new Date();
-      const previous = this._readRecordDate();
+      const nowGMT = new Date();
+      const now = new Date(nowGMT.getTime() - this.TIME_ZONE_DIFF);
+      const previousGMT = this._readRecordDate();
+      const previous = new Date(previousGMT.getTime() - this.TIME_ZONE_DIFF);
       // 月はまたいでない
       if (now.getMonth() == previous.getMonth()) {
         // 日またぎ
