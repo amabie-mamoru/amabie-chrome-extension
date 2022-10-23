@@ -3,7 +3,7 @@
     constructor (notifyFunc) {
       this.limit = 7200; // 2時間 = 7200
       this.snooze = 1800; // 30分 = 1800
-      this.resetHour = 5; // 5時 (0-23時表記)
+      this.resetHour = 5; // 5時 (0-23時表記) 一旦仮に GMT 20時にしてみる
       // spent って言ってるけど、滞在しているという意味合いに変わった
       this._spentTime = 0;
       this.isLeft = false;
@@ -39,14 +39,20 @@
       document.cookie = `youtubeObserverDate=${(new Date()).getTime()}`
     }
     resetIfNeeded() {
-      const nowGMT = new Date();
-      const now = new Date(nowGMT.getTime() - this.TIME_ZONE_DIFF);
-      const previousGMT = this._readRecordDate();
-      const previous = new Date(previousGMT.getTime() - this.TIME_ZONE_DIFF);
+      const now = new Date();
+      const previous = this._readRecordDate();
       // 月はまたいでない
       if (now.getMonth() == previous.getMonth()) {
-        // 日またぎ
+        // 前日日をまたいでいない場合
         if (now.getDate() > previous.getDate()) {
+          // 一応時間を確認して時間超えてたらリセット
+          if (now.getHours() >= this.resetHour) {
+            this._writeCookie(0);
+            this._spentTime = 0;
+          }
+        }
+        // 前日日をまたいでも YouTube をみていたらここ
+        else if (now.getDate() == previous.getDate()) {
           if (now.getHours() >= this.resetHour) {
             this._writeCookie(0);
             this._spentTime = 0;
