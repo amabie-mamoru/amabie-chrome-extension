@@ -38,9 +38,13 @@
       document.cookie = `youtubeObserverTime=${time}`
       document.cookie = `youtubeObserverDate=${(new Date()).getTime()}`
     }
+    _writeTimeForReset()
+    {
+      document.cookie = `youtubeObserverTimeForReset=${(new Date()).getTime()}`
+    }
     resetIfNeeded() {
       const now = new Date();
-      const previous = this._readRecordDate();
+      const previous = this._readTimeForReset();
       // 月はまたいでない
       if (now.getMonth() == previous.getMonth()) {
         // 前日日をまたいでいない場合
@@ -48,13 +52,7 @@
           // 一応時間を確認して時間超えてたらリセット
           if (now.getHours() >= this.resetHour) {
             this._writeCookie(0);
-            this._spentTime = 0;
-          }
-        }
-        // 前日日をまたいでも YouTube をみていたらここ
-        else if (now.getDate() == previous.getDate()) {
-          if (now.getHours() >= this.resetHour) {
-            this._writeCookie(0);
+            this._writeTimeForReset();
             this._spentTime = 0;
           }
         }
@@ -63,6 +61,7 @@
       else if (now.getMonth() > previous.getMonth()) {
         if (now.getHours() >= this.resetHour) {
           this._writeCookie(0);
+          this._writeTimeForReset();
           this._spentTime = 0;
         }
       }
@@ -70,6 +69,7 @@
       else if (now.getMonth() < previous.getMonth()) {
         if (now.getHours() >= this.resetHour) {
           this._writeCookie(0);
+          this._writeTimeForReset();
           this._spentTime = 0;
         }
       }
@@ -87,6 +87,13 @@
         return 0;
       }
       return parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1], 10);
+    }
+    _readTimeForReset() {
+      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTimeForReset')) === undefined) {
+        this._writeTimeForReset();
+        return new Date();
+      }
+      return new Date(parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTimeForReset')).split('=')[1]));
     }
     _updateTime() {
       if (this.isLeft) { return; }
