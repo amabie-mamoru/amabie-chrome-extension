@@ -40,7 +40,10 @@
     }
     _writeTimeForReset()
     {
-      document.cookie = `youtubeObserverTimeForReset=${(new Date()).getTime()}`
+      // めっちゃ悩んだが youtubeObserverTimeForReset の key で登録すると、なぜか youtubeObserverTime が参照される。
+      // 名前が似てるからか全くわからないが、ハマったので回避するようにした。
+      // もしかしたら key の長さに制約あるかも
+      document.cookie = `youtubeObserverForReset=${(new Date()).getTime()}`
     }
     resetIfNeeded() {
       const now = new Date();
@@ -86,14 +89,14 @@
         this._writeCookie(0);
         return 0;
       }
-      return parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1], 10);
+      return parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTime')).split('=')[1]);
     }
     _readTimeForReset() {
-      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTimeForReset')) === undefined) {
+      if (document.cookie.split('; ').find(row => row.startsWith('youtubeObserverForReset')) === undefined) {
         this._writeTimeForReset();
         return new Date();
       }
-      return new Date(parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverTimeForReset')).split('=')[1]));
+      return new Date(parseInt(document.cookie.split('; ').find(row => row.startsWith('youtubeObserverForReset')).split('=')[1]));
     }
     _updateTime() {
       if (this.isLeft) { return; }
