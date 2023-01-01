@@ -1,0 +1,13 @@
+name: "amabie chrome extension"
+description: "天日江護が使うchrome拡張機能"
+version: "1.0"
+manifest_version: 3
+content_scripts:
+  - js:
+      - "github_project_assignee_list.js"
+    matches:
+      - "https://github.com/*"
+  - js:
+      - "observe_youtube_watch.js"
+    matches:
+      - "https://www.youtube.com/*"
