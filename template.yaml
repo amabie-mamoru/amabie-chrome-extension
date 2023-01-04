@@ -11,3 +11,8 @@ content_scripts:
       - "observe_youtube_watch.js"
     matches:
       - "https://www.youtube.com/*"
+  # 一時的に廃止
+  # - js:
+  #     - "forbidden_site.js"
+  #   matches:
+  #     - "https://www.youtube.com/*"
