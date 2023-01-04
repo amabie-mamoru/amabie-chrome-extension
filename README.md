@@ -1,6 +1,6 @@
 # 天日江護が使ってる自作 Chrome Extension
 
-## Youtube 見過ぎを自分で抑止したい人用の機能
+## Youtube 見過ぎを自分で抑止したい人用の機能 (observe\_youtube\_watch.js)
 
 ![](./doc/images/observe-youtube-watch.gif)
 
@@ -17,7 +17,7 @@
 * 設定時間にきたらリセットするのでリセット時間に合わせて 1日n時間まで！みたいな制限ができる
 
 
-## Github Project で Assignee をアイコン 1 Click で絞り込める機能
+## Github Project で Assignee をアイコン 1 Click で絞り込める機能(github\_project\_assignee\_list.js)
 
 ![](./doc/images/github-project-assignee-list.gif)
 
@@ -32,3 +32,14 @@
 アイコンを探したり検索クエリを書く手間をなくす
 
 また、アイコンが似てる人向けに a タグの title 属性を使って長時間マウスオーバーすると名前が出るようにした
+
+## 完全自制したいときの機能(forbidden\_site.js)
+
+### 課題
+
+observe\_youtube\_watch.js 程度では自制できないタイミングにきた
+
+### 機能効果
+
+alert を使って擬似的にサイト内を操作できない(かろうじてできてもめちゃくちゃ不便にする)
+
